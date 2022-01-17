@@ -2,7 +2,7 @@
 
 from datetime import date
 from application import app
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, abort
 from application.models.models import Department, Employee
 from application.forms.forms import AddDepartmentForm, AddEmployeeForm
 from application.service.service_departments import add_department, update_department, delete_department
@@ -49,10 +49,14 @@ def employees_post():
 @app.route("/employee/<id_>")
 def employee(id_):
     emp = Employee.query.get(id_)
+    if not emp:
+        abort(404)
     return render_template("employee.html", employee=emp)
 
 
 @app.route("/department/<id_>")
 def department(id_):
     dep = Department.query.get(id_)
+    if not dep:
+        abort(404)
     return render_template("department.html", department=dep)
