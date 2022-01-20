@@ -18,3 +18,18 @@ class AddEmployeeForm(FlaskForm):
     department = StringField("Department", validators=[DataRequired()])
     salary = FloatField("Salary", validators=[DataRequired()])
     add = SubmitField("Add")
+
+
+class EditDepartmentForm(FlaskForm):
+    """This is form class for editing existing department"""
+    name = StringField("Name", validators=[DataRequired()])
+    edit = SubmitField("Edit")
+
+
+class EditEmployeeForm(FlaskForm):
+    """This is form class for editing existing employee"""
+    name = StringField("Name", validators=[DataRequired()])
+    birth_date = StringField("Birth date", validators=[DataRequired()])
+    department = StringField("Department", validators=[DataRequired()])
+    salary = FloatField("Salary", validators=[DataRequired()])
+    edit = SubmitField("Edit")

@@ -33,7 +33,32 @@ class TestEmployeesViews(unittest.TestCase):
         """This test is for checking whether there would be correct response to not found employee"""
         tester = app.test_client(self)
         emps = Employee.query.all()
-        response = tester.get(f"/department/{len(emps)+1}", content_type="html/text")
+        max_id = 0
+        for emp in emps:
+            if emp.id > max_id:
+                max_id = emp.id
+        response = tester.get(f"/employee/{max_id+1}", content_type="html/text")
+        self.assertEqual(response.status_code, 404)
+
+    def test_edit_employees(self):
+        """This test is for checking whether there would be correct response to editing existing employee"""
+        tester = app.test_client(self)
+        emps = Employee.query.all()
+        for emp in emps:
+            response = tester.post(f"/employee/{emp.id}", data={"name": "Test Test", "birth_date": "1234-56-78",
+                                                                "department": "Test department", "salary": 12345},
+                                   follow_redirects=True)
+            self.assertEqual(response.status_code, 200)
+
+    def test_not_found_delete(self):
+        """This test is for checking whether there would be correct response to not found employee while deleting one"""
+        tester = app.test_client(self)
+        emps = Employee.query.all()
+        max_id = 0
+        for emp in emps:
+            if emp.id > max_id:
+                max_id = emp.id
+        response = tester.get(f"/employee/{max_id+1}/delete")
         self.assertEqual(response.status_code, 404)
 
 

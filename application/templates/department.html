@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
 <h2>{{department.name}}</h2>
 <p>Average salary: </p>
+</div>
+<div class="container">
+  <h3>Edit department</h3>
+  <form method="POST" class="form-inline">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.name.label }}
+      {{ form.name(class="form-control", placeholder="Enter department name", value=department.name)}}
+    </div>
+    {{ form.edit(class="btn btn-default")}}
+  </form>
+</div>
 {% endblock %}

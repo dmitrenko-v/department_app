@@ -25,9 +25,9 @@
         <td><a href="{{url_for('department', id_=department.id)}}">{{department.name}}</a></td>
         <td>No employees</td>
         <td>
-          <div class="btn-group">
-            <button type="button" class="btn">Edit</button>
-            <button type="button" class="btn delete">Delete</button></div>
+            <form action="{{ url_for('department_delete', id_=department.id) }}">
+              <input class="btn delete" type="submit" value="Delete">
+            </form>
         </td>
       </tr>
     {% endfor %}

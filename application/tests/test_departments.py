@@ -8,7 +8,7 @@ import unittest
 class TestDepartmentViews(unittest.TestCase):
     """This is class for departments views testing"""
     def test_departments_get(self):
-        """This test for GET /departments page"""
+        """This test is for GET /departments page"""
         tester = app.test_client(self)
         response = tester.get("/departments", content_type="html/text")
         self.assertEqual(response.status_code, 200)
@@ -31,8 +31,19 @@ class TestDepartmentViews(unittest.TestCase):
         """This test is for checking whether there would be correct response to not found department"""
         tester = app.test_client(self)
         deps = Department.query.all()
-        response = tester.get(f"/department/{len(deps)+1}", content_type="html/text")
+        max_id = 0
+        for dep in deps:
+            if dep.id > max_id:
+                max_id = dep.id
+        response = tester.get(f"/department/{max_id+1}", content_type="html/text")
         self.assertEqual(response.status_code, 404)
+
+    def test_edit_department(self):
+        tester = app.test_client(self)
+        deps = Department.query.all()
+        for dep in deps:
+            response = tester.post(f"/department/{dep.id}", data={"name": "Test department"}, follow_redirects=True)
+            self.assertEqual(response.status_code, 200)
 
 if __name__ == "__main__":
     unittest.main()
