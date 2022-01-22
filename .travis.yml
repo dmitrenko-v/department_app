@@ -1,9 +1,7 @@
 language: python
 
 python:
-  - "3.9"
-
-#install dependencies
+  - 3.9
 install:
   - pip install -r requirements.txt
 
