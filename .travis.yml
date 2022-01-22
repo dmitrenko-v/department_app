@@ -1,12 +1,11 @@
 language: python
 
 python:
-    - "3.9"
+  - "3.9"
 
 #install dependencies
-before_script:
-  - easy_install distribute
+install:
   - pip install -r requirements.txt
 
 script:
-    - python -m unittest dicsover
+  - python -m unittest dicsover
