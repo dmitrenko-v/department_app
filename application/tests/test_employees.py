@@ -1,6 +1,7 @@
 """This file contains tests for employees views"""
 
-from application import app
+from datetime import date
+from application import app, db
 from application.models.models import Employee
 import unittest
 
@@ -60,6 +61,16 @@ class TestEmployeesViews(unittest.TestCase):
                 max_id = emp.id
         response = tester.get(f"/employee/{max_id+1}/delete")
         self.assertEqual(response.status_code, 404)
+
+    def test_delete_employee(self):
+        tester = app.test_client(self)
+        # Creating mock employee to test if deleting working properly
+        mock_emp = Employee(name="Test Test", birth_date=date(1111, 12, 22),
+                            department="Test department", salary=12345)
+        db.session.add(mock_emp)
+        db.session.commit()
+        response = tester.get(f"/employee/{mock_emp.id}/delete")
+        self.assertEqual(response.status_code, 302)
 
 
 if __name__ == "__main__":
