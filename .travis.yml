@@ -4,8 +4,9 @@ python:
     - "3.9"
 
 #install dependencies
-install:
-    - pip install -r requirements.txt
+before_script:
+  - easy_install distribute
+  - pip install -r requirements.txt
 
 script:
     - python -m unittest dicsover
