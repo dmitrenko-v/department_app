@@ -1,9 +1,9 @@
 """This file contains tests for employees views"""
 
+import unittest
 from datetime import date
 from application import app, db
 from application.models.models import Employee
-import unittest
 
 
 class TestEmployeesViews(unittest.TestCase):
@@ -26,12 +26,14 @@ class TestEmployeesViews(unittest.TestCase):
         """This test is for creating new employee from form"""
         tester = app.test_client(self)
         response = tester.post("/employees", data={"name": "Test Test", "birth_date": "1234-56-78",
-                                                   "department": "Test department", "salary": 12345},
+                                                   "department": "Test department",
+                                                   "salary": 12345},
                                follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_not_found_employee(self):
-        """This test is for checking whether there would be correct response to not found employee"""
+        """This test is for checking whether there would be correct
+        response to not found employee"""
         tester = app.test_client(self)
         emps = Employee.query.all()
         max_id = 0
@@ -42,17 +44,21 @@ class TestEmployeesViews(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_edit_employees(self):
-        """This test is for checking whether there would be correct response to editing existing employee"""
+        """This test is for checking whether there would be correct
+        response to editing existing employee"""
         tester = app.test_client(self)
         emps = Employee.query.all()
         for emp in emps:
-            response = tester.post(f"/employee/{emp.id}", data={"name": "Test Test", "birth_date": "1234-56-78",
-                                                                "department": "Test department", "salary": 12345},
+            response = tester.post(f"/employee/{emp.id}", data={"name": "Test Test",
+                                                                "birth_date": "1234-56-78",
+                                                                "department": "Test department",
+                                                                "salary": 12345},
                                    follow_redirects=True)
             self.assertEqual(response.status_code, 200)
 
     def test_not_found_delete(self):
-        """This test is for checking whether there would be correct response to not found employee while deleting one"""
+        """This test is for checking whether there would be correct
+        response to not found employee while deleting one"""
         tester = app.test_client(self)
         emps = Employee.query.all()
         max_id = 0
@@ -63,6 +69,8 @@ class TestEmployeesViews(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_delete_employee(self):
+        """This test is for checking whether there would be
+        correct response to deleting employee from DB"""
         tester = app.test_client(self)
         # Creating mock employee to test if deleting working properly
         mock_emp = Employee(name="Test Test", birth_date=date(1111, 12, 22),

@@ -1,7 +1,8 @@
 """This file contains tests for departments REST API"""
+
+import unittest
 from application import app, db
 from application.models.models import Department
-import unittest
 
 
 class TestDepartmentsRest(unittest.TestCase):
@@ -29,7 +30,8 @@ class TestDepartmentsRest(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_not_found_department(self):
-        """This test is for checking whether there would be correct response to not found department"""
+        """This test is for checking whether there would be correct
+        response to not found department"""
         tester = app.test_client(self)
         deps = Department.query.all()
         max_id = 0
@@ -40,7 +42,8 @@ class TestDepartmentsRest(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_not_found_delete_department(self):
-        """This test is for checking whether there would be correct response to not found department"""
+        """This test is for checking whether there would be correct
+         response to not found department"""
         tester = app.test_client(self)
         deps = Department.query.all()
         max_id = 0
@@ -63,6 +66,8 @@ class TestDepartmentsRest(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_delete_department(self):
+        """This test is for checking whether there would be correct
+        response when deleting department"""
         tester = app.test_client(self)
         # Creating mock department to test if deleting working properly
         mock_dep = Department(name="Mock dep")

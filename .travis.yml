@@ -7,3 +7,4 @@ install:
 
 script:
   - python -m unittest discover application/tests
+  - pylint $(git ls-files '*.py') #check code style

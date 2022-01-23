@@ -1,9 +1,12 @@
-"""This file contains functions for CRUD opertaions with database"""
+"""This file contains functions for departments
+CRUD operations with database"""
 from application import db
 from application.models.models import Department
 
 
 def add_department(name):
+    """This is service function to add department
+    to database"""
     deps = Department.query.all()
     for dep in deps:
         if dep.name == name:
@@ -13,19 +16,20 @@ def add_department(name):
     db.session.commit()
 
 
-def delete_department(id):
-    dep = Department.query.get(id)
+def delete_department(id_):
+    """This is service function to delete department
+       from database"""
+    dep = Department.query.get(id_)
     if not dep:
         return -1
-    else:
-        db.session.delete(dep)
-        db.session.commit()
+    db.session.delete(dep)
+    db.session.commit()
 
 
-def update_department(id, name):
-    dep = Department.query.get(id)
+def update_department(id_, name):
+    """This is service function to update department"""
+    dep = Department.query.get(id_)
     if not dep:
         return -1
-    else:
-        dep.name = name
-        db.session.commit()
+    dep.name = name
+    db.session.commit()

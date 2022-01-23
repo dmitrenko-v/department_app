@@ -1,8 +1,8 @@
 """This file contains tests for department views """
 
+import unittest
 from application import app, db
 from application.models.models import Department
-import unittest
 
 
 class TestDepartmentViews(unittest.TestCase):
@@ -24,11 +24,13 @@ class TestDepartmentViews(unittest.TestCase):
     def test_post_departments(self):
         """This test is for creating new department from form"""
         tester = app.test_client(self)
-        response = tester.post("/departments", data={"name": "Test department"}, follow_redirects=True)
+        response = tester.post("/departments", data={"name": "Test department"},
+                               follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
     def test_not_found_department(self):
-        """This test is for checking whether there would be correct response to not found department"""
+        """This test is for checking whether there would be correct response
+        to not found department"""
         tester = app.test_client(self)
         deps = Department.query.all()
         max_id = 0
@@ -39,11 +41,13 @@ class TestDepartmentViews(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_edit_department(self):
-        """This test is for checking whether there would be a correct response to editing department info"""
+        """This test is for checking whether there would be a correct
+         response to editing department info"""
         tester = app.test_client(self)
         deps = Department.query.all()
         for dep in deps:
-            response = tester.post(f"/department/{dep.id}", data={"name": "Test department"}, follow_redirects=True)
+            response = tester.post(f"/department/{dep.id}", data={"name": "Test department"},
+                                   follow_redirects=True)
             self.assertEqual(response.status_code, 200)
 
     def test_not_found_delete(self):
@@ -59,6 +63,8 @@ class TestDepartmentViews(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_delete_department(self):
+        """This test is for checking whether there would be
+        correct response to deleting department from DB"""
         tester = app.test_client(self)
         # Creating mock department to test if deleting working properly
         mock_dep = Department(name="Mock dep")

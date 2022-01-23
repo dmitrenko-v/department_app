@@ -12,7 +12,8 @@ class Department(db.Model):
 
 
 class Employee(db.Model):
-    """Employee table contains id(primary key), name, birth date, department and salary of employee"""
+    """Employee table contains id(primary key), name, birth date,
+    department and salary of employee"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(90), nullable=False)
     birth_date = db.Column(db.Date, nullable=False)
@@ -20,4 +21,5 @@ class Employee(db.Model):
     salary = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f"Employee {self.name} from {self.department} Department born on {self.birth_date} earns {self.salary}"
+        return f"Employee {self.name} from {self.department} " \
+               f"Department born on {self.birth_date} earns {self.salary}"
